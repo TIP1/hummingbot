@@ -27,33 +27,14 @@ def is_exchange_information_valid(exchange_info: Dict[str, Any]) -> bool:
 KEYS = {
     "deribit_api_key":
         ConfigVar(key="deribit_api_key",
-                  prompt="Enter your Deribit API key >>> ",
+                  prompt="Enter your Deribit API Client ID >>> ",
                   required_if=using_exchange("deribit"),
                   is_secure=True,
                   is_connect_key=True),
     "deribit_api_secret":
         ConfigVar(key="deribit_api_secret",
-                  prompt="Enter your Deribit API secret >>> ",
+                  prompt="Enter your Deribit API Client Secret >>> ",
                   required_if=using_exchange("deribit"),
                   is_secure=True,
                   is_connect_key=True),
 }
-
-OTHER_DOMAINS = ["deribit_us"]
-OTHER_DOMAINS_PARAMETER = {"deribit_us": "us"}
-OTHER_DOMAINS_EXAMPLE_PAIR = {"deribit_us": "BTC-USDT"}
-OTHER_DOMAINS_DEFAULT_FEES = {"deribit_us": [0.1, 0.1]}
-OTHER_DOMAINS_KEYS = {"deribit_us": {
-    "deribit_us_api_key":
-        ConfigVar(key="deribit_us_api_key",
-                  prompt="Enter your Deribit US API key >>> ",
-                  required_if=using_exchange("deribit_us"),
-                  is_secure=True,
-                  is_connect_key=True),
-    "deribit_us_api_secret":
-        ConfigVar(key="deribit_us_api_secret",
-                  prompt="Enter your Deribit US API secret >>> ",
-                  required_if=using_exchange("deribit_us"),
-                  is_secure=True,
-                  is_connect_key=True),
-}}
