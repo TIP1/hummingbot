@@ -102,7 +102,7 @@ class DeribitAPIUserStreamDataSource(UserStreamTrackerDataSource):
     async def _get_listen_key(self):
         try:
             data = await web_utils.api_request(
-                path=CONSTANTS.BINANCE_USER_STREAM_PATH_URL,
+                path=CONSTANTS.DERIBIT_USER_STREAM_PATH_URL,
                 api_factory=self._api_factory,
                 throttler=self._throttler,
                 time_synchronizer=self._time_synchronizer,
@@ -119,7 +119,7 @@ class DeribitAPIUserStreamDataSource(UserStreamTrackerDataSource):
     async def _ping_listen_key(self) -> bool:
         try:
             data = await web_utils.api_request(
-                path=CONSTANTS.BINANCE_USER_STREAM_PATH_URL,
+                path=CONSTANTS.DERIBIT_USER_STREAM_PATH_URL,
                 api_factory=self._api_factory,
                 throttler=self._throttler,
                 time_synchronizer=self._time_synchronizer,
