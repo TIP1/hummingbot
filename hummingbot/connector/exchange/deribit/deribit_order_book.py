@@ -4,6 +4,8 @@ from hummingbot.core.data_type.common import TradeType
 from hummingbot.core.data_type.order_book import OrderBook
 from hummingbot.core.data_type.order_book_message import OrderBookMessage, OrderBookMessageType
 
+from .deribit_constants import SIDE_BUY, SIDE_SELL
+
 
 class DeribitOrderBook(OrderBook):
 
@@ -61,12 +63,19 @@ class DeribitOrderBook(OrderBook):
         """
         if metadata:
             msg.update(metadata)
-        ts = msg["E"]
+        
+        if msg["direction"] == SIDE_SELL:
+            trade_type = float(TradeType.SELL.value)
+        elif msg["direction"] == SIDE_BUY:
+            trade_type = float(TradeType.BUY.value)
+        else:
+            raise ValueError(f"Unexpected trade type: {msg['direction']}")
+
         return OrderBookMessage(OrderBookMessageType.TRADE, {
             "trading_pair": msg["instrument_name"],
-            "trade_type": float(TradeType.SELL.value) if msg["direction"] == "????" else float(TradeType.BUY.value),
-            "trade_id": msg["t"],
-            "update_id": ts,
-            "price": msg["p"],
-            "amount": msg["q"]
-        }, timestamp=ts * 1e-3)
+            "trade_type": trade_type,
+            "trade_id": msg["trade_id"],
+            "update_id": msg["timestamp"],
+            "price": msg["price"],
+            "amount": msg["amount"]
+        }, timestamp=msg["timestamp"] * 1e-3)
