@@ -24,6 +24,8 @@ SERVER_TIME_PATH_URL = "/public/get_time"
 ACCOUNTS_PATH_URL = "/private/get_account_summary"
 MY_TRADES_PATH_URL = "/private/get_block_trade"
 ORDER_PATH_URL = "/private/"  # /private/sell  or  /private/buy
+ORDER_BUY_PATH_URL = "/private/buy"
+ORDER_SELL_PATH_URL = "/private/sell"
 DERIBIT_USER_STREAM_PATH_URL = "private/list_api_keys"
 
 WS_HEARTBEAT_TIME_INTERVAL = 30
