@@ -1,14 +1,12 @@
 from hummingbot.core.api_throttler.data_types import LinkedLimitWeightPair, RateLimit
 from hummingbot.core.data_type.in_flight_order import OrderState
 
-DEFAULT_DOMAIN = "com"
-
 HBOT_ORDER_ID_PREFIX = "x-XEKWYICX"
 MAX_ORDER_ID_LEN = 36
 
 # Base URL
-REST_URL = "https://api.deribit.{}/api/"
-WSS_URL = "wss://stream.deribit.{}:9443/ws"
+REST_URL = "https://test.deribit.com/api/v2"
+WSS_URL = "wss://test.deribit.com/ws/api/v2"
 
 PUBLIC_API_VERSION = "v2"
 PRIVATE_API_VERSION = "v2"
