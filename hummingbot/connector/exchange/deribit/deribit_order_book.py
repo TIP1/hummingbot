@@ -2,10 +2,7 @@ from typing import Dict, Optional
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.core.data_type.order_book import OrderBook
-from hummingbot.core.data_type.order_book_message import (
-    OrderBookMessage,
-    OrderBookMessageType
-)
+from hummingbot.core.data_type.order_book_message import OrderBookMessage, OrderBookMessageType
 
 
 class DeribitOrderBook(OrderBook):
@@ -27,7 +24,7 @@ class DeribitOrderBook(OrderBook):
         # ToDo: https://docs.deribit.com/?python#public-get_order_book
         return OrderBookMessage(OrderBookMessageType.SNAPSHOT, {
             "trading_pair": msg["instrument_name"],
-            "update_id": msg["lastUpdateId"],
+            "update_id": msg["change_id"],
             "bids": msg["bids"],
             "asks": msg["asks"]
         }, timestamp=timestamp)
@@ -47,11 +44,11 @@ class DeribitOrderBook(OrderBook):
         if metadata:
             msg.update(metadata)
         return OrderBookMessage(OrderBookMessageType.DIFF, {
-            "trading_pair": msg["trading_pair"],
-            "first_update_id": msg["U"],
-            "update_id": msg["u"],
-            "bids": msg["b"],
-            "asks": msg["a"]
+            "trading_pair": msg["instrument_name"],
+            "first_update_id": msg["prev_change_id"],
+            "update_id": msg["change_id"],
+            "bids": msg["bids"],
+            "asks": msg["asks"]
         }, timestamp=timestamp)
 
     @classmethod
@@ -66,8 +63,8 @@ class DeribitOrderBook(OrderBook):
             msg.update(metadata)
         ts = msg["E"]
         return OrderBookMessage(OrderBookMessageType.TRADE, {
-            "trading_pair": msg["trading_pair"],
-            "trade_type": float(TradeType.SELL.value) if msg["m"] else float(TradeType.BUY.value),
+            "trading_pair": msg["instrument_name"],
+            "trade_type": float(TradeType.SELL.value) if msg["direction"] == "????" else float(TradeType.BUY.value),
             "trade_id": msg["t"],
             "update_id": ts,
             "price": msg["p"],
